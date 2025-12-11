@@ -184,15 +184,18 @@ mode "resize" {
 #################           autostart   -    execute applications at boot time                      #################
 #####################################################################################################################
 
+# GTKアプリケーションのクライアント側装飾（CSD）タイトルバーを無効化
+# 注意: 完全に非表示にするには、~/.xprofile や ~/.xinitrc で GTK_CSD=0 を設定してください
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 #####################################################################################################################
 #################                          applications keyboard shortcuts                          #################
 #####################################################################################################################
 
-bindsym $mod+Return exec xfce4-terminal
-bindsym $mod+Shift+Return exec --no-startup-id nemo
+bindsym $mod+Return exec lxterminal
 
+bindsym $mod+Shift+Return exec --no-startup-id nemo
+    
 bindsym control+mod1+u exec --no-startup-id pavucontrol
 
 bindsym $mod+b exec --no-startup-id firefox || exec --no-startup-id chromium || exec --no-startup-id google-chrome
@@ -244,14 +247,24 @@ bindsym $mod+i bar mode invisible
 #################                          border settings (NO GAPS)                                 #################
 #####################################################################################################################
 
+# デフォルトのボーダー設定（タイトルバーなし）
+default_border pixel 1
+default_floating_border pixel 1
+
+# すべてのウィンドウにボーダー設定を適用
 for_window [class="^.*"] border pixel 1
+
+# タイトルバーを非表示にする設定
+# 注意: GTKアプリ（Mousepadなど）のCSDタイトルバーは、環境変数 GTK_CSD=0 で無効化する必要があります
+new_window none
+new_float none
 
 #####################################################################################################################
 #################                          picom and wallpaper                                      #################
 #####################################################################################################################
 
 exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
-exec_always --no-startup-id nitrogen --restore
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/background.jpeg
 exec_always --no-startup-id ~/.config/i3/scripts/mouse.sh
 
 #####################################################################################################################
@@ -266,15 +279,15 @@ bar {
     strip_workspace_numbers yes
 
     colors {
-            separator          #1f222d
-            background         #1f222d
+            separator          #331f222d
+            background         #331f222d
             statusline         #81a1c1
 
-            focused_workspace  #1f222d #1f222d #81a1c1
-            active_workspace   #1f222d #252936 #5e81ac
-            inactive_workspace #1f222d #1f222d #4c566a
-            urgent_workspace   #1f222d #1f222d #ee829f
-            binding_mode       #1f222d #81a1c1 #2e3440
+            focused_workspace  #331f222d #331f222d #81a1c1
+            active_workspace   #331f222d #33252936 #5e81ac
+            inactive_workspace #331f222d #331f222d #4c566a
+            urgent_workspace   #331f222d #331f222d #ee829f
+            binding_mode       #331f222d #81a1c1 #2e3440
     }
 }
 
