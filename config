@@ -1,0 +1,293 @@
+#####################################################################################################################
+#################                          Define the $mod variable/key                             #################
+#####################################################################################################################
+
+set $mod Mod1
+
+#####################################################################################################################
+#################                          Define the movements keys - variables                    #################
+#####################################################################################################################
+
+set $up l
+set $down k
+set $left j
+set $right semicolon
+
+font pango:OperatorMono Nerd Font 0
+
+#####################################################################################################################
+#################                          Single and Dual screen                                   #################
+#####################################################################################################################
+
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+
+#####################################################################################################################
+#################                                   menu                                            #################
+#####################################################################################################################
+
+bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#1f222d' -nf '#81a1c1' -sb '#81a1c1' -sf '#1f222d' -fn 'OperatorMonoBook:bold:pixelsize=18'
+
+#####################################################################################################################
+#################                          how to exit, logoff, suspend, ...                        #################
+#####################################################################################################################
+
+set $mode_system System (k) lock, (l) logout, (u) suspend, (h) hibernate, (r) reboot, (s) shutdown
+bindsym $mod+Shift+period mode "$mode_system"
+
+mode "$mode_system" {
+    bindsym k exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
+    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
+    bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+#####################################################################################################################
+#################                          reload changed configuration                             #################
+#####################################################################################################################
+
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+x reload
+
+#####################################################################################################################
+#################                          Stopping an application                                  #################
+#####################################################################################################################
+
+bindsym $mod+q kill
+
+#####################################################################################################################
+#################                          Moving around in i3                                      #################
+#####################################################################################################################
+
+floating_modifier $mod
+bindsym $mod+Shift+space floating toggle
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#####################################################################################################################
+#################                          moving around workspaces                                 #################
+#####################################################################################################################
+
+bindsym Mod1+Ctrl+Tab workspace next
+bindsym Mod1+Ctrl+Shift+Tab workspace prev
+bindsym $mod+Tab workspace back_and_forth
+
+bindsym Mod1+Ctrl+Right workspace next
+bindsym Mod1+Ctrl+Left workspace prev
+
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Shift+Tab move container to workspace back_and_forth; workspace back_and_forth
+
+#####################################################################################################################
+#################                          Scratchpad                                        #################
+#####################################################################################################################
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+#####################################################################################################################
+#################                          Tiling parameters                                        #################
+#####################################################################################################################
+
+default_orientation horizontal
+
+bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
+
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+bindsym $mod+Shift+C move position center
+bindsym $mod+Shift+s sticky toggle
+
+####################################################################################################################
+# resize window
+####################################################################################################################
+
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+       bindsym $left  resize shrink width 10 px or 10 ppt
+       bindsym $down  resize grow height 10 px or 10 ppt
+       bindsym $up    resize shrink height 10 px or 10 ppt
+       bindsym $right resize grow width 10 px or 10 ppt
+
+       bindsym Left  resize shrink width 1 px or 1 ppt
+       bindsym Down  resize grow height 1 px or 1 ppt
+       bindsym Up    resize shrink height 1 px or 1 ppt
+       bindsym Right resize grow width 1 px or 1 ppt
+
+       bindsym Return mode "default"
+       bindsym Escape mode "default"
+}
+
+#####################################################################################################################
+#################           autostart   -    execute applications at boot time                      #################
+#####################################################################################################################
+
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+#####################################################################################################################
+#################                          applications keyboard shortcuts                          #################
+#####################################################################################################################
+
+bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Shift+Return exec --no-startup-id nemo
+
+bindsym control+mod1+u exec --no-startup-id pavucontrol
+
+bindsym $mod+b exec --no-startup-id firefox || exec --no-startup-id chromium || exec --no-startup-id google-chrome
+
+bindsym $mod+e exec --no-startup-id code || exec --no-startup-id gedit || exec --no-startup-id nano
+
+bindsym $mod+c exec --no-startup-id gnome-calculator || exec --no-startup-id qalculate-gtk
+
+bindsym $mod+comma exec --no-startup-id gnome-control-center || exec --no-startup-id systemsettings
+
+#####################################################################################################################
+#################                          screenshots                                              #################
+#####################################################################################################################
+
+bindsym Print exec maim -s --format png /dev/stdout | xclip -selection clipboard -t image/png -i
+bindsym $mod+Print exec maim --select | tee ~/Pictures/$(date +%s).png | xclip -sel c -t image/png
+bindsym Shift+Print exec maim --format png /dev/stdout | xclip -selection clipboard -t image/png -i
+bindsym $mod+Shift+Print exec maim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png
+
+#####################################################################################################################
+#################                          audio settings                                           #################
+#####################################################################################################################
+
+set $refresh_i3status exec --no-startup-id pkill -SIGUSR1 i3status
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULTSINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+#####################################################################################################################
+#################                          light                                               #################
+#####################################################################################################################
+
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+
+bindsym $mod+equal exec xbacklight -inc 5 || exec brightnessctl set +5%
+bindsym $mod+Shift+equal exec xbacklight -dec 5 || exec brightnessctl set 5%-
+
+#####################################################################################################################
+#################                          bar toggle                                               #################
+#####################################################################################################################
+
+bindsym $mod+Shift+b bar mode toggle
+bindsym $mod+i bar mode invisible
+
+#####################################################################################################################
+#################                          border settings (NO GAPS)                                 #################
+#####################################################################################################################
+
+for_window [class="^.*"] border pixel 1
+
+#####################################################################################################################
+#################                          picom and wallpaper                                      #################
+#####################################################################################################################
+
+exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
+exec_always --no-startup-id nitrogen --restore
+exec_always --no-startup-id ~/.config/i3/scripts/mouse.sh
+
+#####################################################################################################################
+#################                          bar appearance                                           #################
+#####################################################################################################################
+
+bar {
+    position top
+    font pango:OperatorMono Nerd Font 12
+    status_command i3status
+    tray_padding 1
+    strip_workspace_numbers yes
+
+    colors {
+            separator          #1f222d
+            background         #1f222d
+            statusline         #81a1c1
+
+            focused_workspace  #1f222d #1f222d #81a1c1
+            active_workspace   #1f222d #252936 #5e81ac
+            inactive_workspace #1f222d #1f222d #4c566a
+            urgent_workspace   #1f222d #1f222d #ee829f
+            binding_mode       #1f222d #81a1c1 #2e3440
+    }
+}
+
+#####################################################################################################################
+#################                          theming WM                                            #################
+#####################################################################################################################
+
+client.focused          #81a1c1 #81a1c1 #ffffff #81a1c1
+client.unfocused        #2e3440 #1f222d #888888 #1f222d
+client.focused_inactive #2e3440 #1f222d #888888 #1f222d
+client.placeholder      #2e3440 #1f222d #888888 #1f222d
+client.urgent           #900000 #900000 #ffffff #900000
+
+client.background       #242424
+
+exec xset r rate 300 50 &
